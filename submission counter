@@ -1,3 +1,7 @@
+# Counts all EDGAR submissions given a year (EDGAR goes back to 1994) via the full index in the Archives (form.idx) and produces CSV with link to each
+
+
+
 #%%
 import requests
 from bs4 import BeautifulSoup
@@ -8,7 +12,7 @@ import os
 
 #%%
 def get_submissions(year):
-    base_url = "https://www.sec.gov/edgar/searchedgar/companysearch.html"
+    # base_url = "https://www.sec.gov/edgar/searchedgar/companysearch.html"
     filings = []
 
     headers = {
@@ -93,7 +97,8 @@ if __name__ == '__main__':
     print("\nFilings per form type:")
     print("Head: ", df['form_type'].value_counts().head(30))
     print("")
-    print("Tail: ",df['form_type'].value_counts().tail(10))
+    print("Tail: ",df['form_type'].value_counts().tail(5))
+
 
 
 # %%
