@@ -1,3 +1,4 @@
+#%%
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -5,8 +6,7 @@ import os
 
 
 
-
-
+#%%
 def get_submissions(year):
     base_url = "https://www.sec.gov/edgar/searchedgar/companysearch.html"
     filings = []
@@ -66,12 +66,11 @@ def get_submissions(year):
         print(f"Found {form_count} Filings in Q{quarter}")
 
     return filings
-
-
+#%%
 
 
 if __name__ == '__main__':
-
+#%%
     year = 2024
 
 
@@ -85,11 +84,16 @@ if __name__ == '__main__':
     df.to_csv(f'edgar_submissions_{year}.csv', index=False)
     print('Submissions CSV saved here: ',os.getcwd())
 
-    # Now you can work with the DataFrame
+#%%    # Now you can work with the DataFrame
     print(f"Total filings: {len(df)}")
     print("\nFirst few entries:")
     print(df.head())
 
-
+#%%
     print("\nFilings per form type:")
-    print(df['form_type'].value_counts())
+    print("Head: ", df['form_type'].value_counts().head(30))
+    print("")
+    print("Tail: ",df['form_type'].value_counts().tail(10))
+
+
+# %%
