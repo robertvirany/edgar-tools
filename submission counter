@@ -16,7 +16,7 @@ def get_submissions(year):
     filings = []
 
     headers = {
-        "User-Agent": "Robert's EDGAR Script robertvirany@gmail.com",
+        "User-Agent": "Robert's EDGAR Script robertvirany@gmail.com", # Change this for your script
         "Accept-Encoding": "gzip, deflate",
         "Host": "www.sec.gov"
     }
@@ -47,7 +47,7 @@ def get_submissions(year):
                 continue
                 
 
-            try:
+            try: # RV - I Wrote these for 2024 but haven't checked if the format is different for other years. Check "url" variable for your year if failures
                 # Fixed width format parsing
                 company_name = line[17:78].strip()
                 form_type = line[0:16].strip()
@@ -78,14 +78,17 @@ if __name__ == '__main__':
     year = 2024
 
 
-    # Fetch submissions for 2024
+    # Fetch submissions for year
     filings = get_submissions(year)
 
 
     df = pd.DataFrame(filings).sort_values(by='date', ascending=True)
+    meta_df = df['form_type'].value_counts()
 
     # Save to CSV (easier to work with later)
     df.to_csv(f'edgar_submissions_{year}.csv', index=False)
+    meta_df.to_csv(f'submissions_{year}_metadata.csv', index=True)
+    
     print('Submissions CSV saved here: ',os.getcwd())
 
 #%%    # Now you can work with the DataFrame
@@ -95,9 +98,9 @@ if __name__ == '__main__':
 
 #%%
     print("\nFilings per form type:")
-    print("Head: ", df['form_type'].value_counts().head(30))
+    print("Head: ", meta_df.head(30))
     print("")
-    print("Tail: ",df['form_type'].value_counts().tail(5))
+    print("Tail: ",meta_df.tail(5))
 
 
 
